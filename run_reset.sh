@@ -1,7 +1,10 @@
 #/bin/bash
 serial=$1
-num=1001
+num=0
 total=4000
+if [ "x$2" != "x" ] ; then
+	total=$2
+fi
 function log()
 {
 	d=`date`
