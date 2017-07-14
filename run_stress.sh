@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 echo on
 seial=$1
 adb -s $seial wait-for-device
