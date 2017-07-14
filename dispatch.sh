@@ -16,6 +16,7 @@ do
 	serial=`echo $device|awk '{print $1}'`
 	$cmd $serial & 
 done
+wait
 
 IFS=$SAVEIFS
 
