@@ -5,16 +5,18 @@ if [ "$cmd" = "" ]  ;then
 	exit 0
 fi
 SAVEIFS=$IFS
-IFS=$'\r'
+IFS=$'\n'
 
 PREFIX="List"
 for device in `adb devices`
 do
+	#echo $device
 	if [[ $device == $PREFIX* ]] ; then
 		continue
 	fi
 	serial=`echo $device|awk '{print $1}'`
-	$cmd $serial & 
+	
+	$cmd $serial &
 done
 wait
 
