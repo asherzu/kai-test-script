@@ -14,8 +14,6 @@ function send_key()
 
 function get_lcd_bl()
 {
-	adb -s $serial wait-for-device
-
 	adb -s $serial shell "cat /sys/class/leds/lcd-backlight/brightness"|tr '\r' ' '|awk '{printf $0}'
 }
 
@@ -53,7 +51,7 @@ function check_idle_from_process()
 {
 	b2g_nb=`get_b2g_process_num`
 	last_b2g_nb=$b2g_nb
-	while [ "x$b2g_nb" = ""  -o  $b2g_nb -lt 6 ];
+	while [ "x$b2g_nb" = ""  -o  $b2g_nb -lt 7 ];
 	do
 		sleep 1
 		b2g_nb=`get_b2g_process_num`
@@ -72,35 +70,24 @@ adb -s $serial wait-for-device
 
 if [ "x$2" != "x" ] ; then
 	check_idle_from_backlight
-else
-	check_idle_from_process
 fi
 
-sleep 3
-log $serial Long press Power key
-send_key POWER 8
-
-sleep 3
-log $serial Move Item to reset
-send_key DPAD_DOWN
-sleep 3
-log $serial Select to reset
-send_key ENTER
 
 
-device=`adb devices|grep $serial`
-count=0
-while [ "x$device" != "x" ];
-do
-	log "$serial  $count s Wait device remove"
-	device=`adb devices|grep $serial`
-	let count++
-	if [ $count -ge 30 ]; then
-		log "$serial reset timeout"
-		exit 1
-		break; 
-	fi
-	sleep 1
-done
+
+send_key STAR
+sleep 1
+send_key POUND
+sleep 1
+send_key NUM0
+sleep 1
+send_key NUM6
+sleep 1
+send_key POUND
+sleep 1
+
+send_key POWER
+
+
 log "$serial device already remove"
 exit 0

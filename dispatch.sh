@@ -5,7 +5,7 @@ if [ "$cmd" = "" ]  ;then
 	exit 0
 fi
 SAVEIFS=$IFS
-IFS=$'\n'
+IFS=$'\r'
 
 PREFIX="List"
 for device in `adb devices`
