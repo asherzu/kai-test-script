@@ -22,7 +22,7 @@ let num++
 while [ $num -le $total ] 
 do
 log =============== $num =================== |tee -a $serial.txt
-./do_reset.sh $serial |tee -a $serial.txt
+./do_reset.sh $serial fromBacklight|tee -a $serial.txt
 if [ $? -ne 0 ] ; then
 	exit 1
 fi
