@@ -2,6 +2,7 @@
 serial=$1
 num=0
 total=1000
+log_file=${serial}_reboot_test.txt
 
 if [ "x$2" != "x" ] ; then
 	total=$2
@@ -9,20 +10,20 @@ fi
 function log()
 {
 	d=`date`
-	echo "${d} : $*"  |tee -a $serial.txt
+	echo "${d} : $*"  |tee -a ${log_file}
 	sync
 }
 emcp_name=`adb -s $serial shell "cat /sys/block/mmcblk0/device/name"`
 log "EMCP:$emcp_name"
 
-log =============== $num =================== |tee -a $serial.txt
-./do_reset.sh $serial fromBacklight|tee -a $serial.txt
+log =============== $num =================== |tee -a ${log_file}
+./do_reset.sh $serial fromBacklight|tee -a ${log_file}
 let num++
 
 while [ $num -le $total ] 
 do
-log =============== $num =================== |tee -a $serial.txt
-./do_reset.sh $serial fromBacklight|tee -a $serial.txt
+log =============== $num =================== |tee -a ${log_file}
+./do_reset.sh $serial fromBacklight|tee -a ${log_file}
 if [ $? -ne 0 ] ; then
 	exit 1
 fi

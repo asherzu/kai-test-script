@@ -57,7 +57,7 @@ function verify()
 	echo ""
 	sync
 	
-	df $folder >> /data/disk.txt
+	df $folder
 	
 	for i in `busybox seq 1 $size`
 	do
@@ -65,12 +65,12 @@ function verify()
 		busybox diff $folder/$i.img $name
 		if [ $? != 0 ] ; then
 			log "$name Fail"
-			log "/data/$i.img"
+			log "$folder/$i.img"
 			mv $folder/$i.img /data/e.img
 			exit 1
 		fi
 	done
-	
+	echo ""
 	
 	
 	log "$folder  $name PASS"
@@ -82,6 +82,7 @@ function cleanup()
 	echo cleanup
 	rm -fr /data/A.txt /data/B.txt /data/T.txt /data/F.txt 2>/dev/null
 	rm -fr /data/*.img 2>/dev/null
+	rm -fr /data/usbmsc_mnt/*.img 2>/dev/null
 	echo cleanup end
 }
 cleanup
@@ -124,6 +125,7 @@ do
 	verify /data/T.txt $sizem /data/usbmsc_mnt
 	verify /data/F.txt $sizem /data/usbmsc_mnt
 	
+	df
 done
 
 cleanup
