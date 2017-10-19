@@ -1,7 +1,7 @@
 #/bin/bash
 serial=$1
 num=0
-total=4000
+total=1000
 
 if [ "x$2" != "x" ] ; then
 	total=$2
