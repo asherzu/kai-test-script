@@ -22,11 +22,25 @@ function get_lcd_bl()
 function check_idle_from_backlight()
 {
 	lcd_backlight=`get_lcd_bl`
-	last_backlight=$lcd_backlight
-	while [ "x$lcd_backligh" = ""  -o  $lcd_backlight -ne 0 ];
+	last_backlight=255
+	
+	
+	
+	while :
 	do
-		sleep 1
 		lcd_backlight=`get_lcd_bl`
+		if [ "$lcd_backlight" -ge 0 ] 2>/dev/null ;then 
+			echo "$lcd_backlight is number." >/dev/null
+		else 
+			echo "get backlight value fail"
+			continue
+		fi 
+		if [ $lcd_backlight -eq 0 ] ; then
+			#echo "lcd aready off"
+			break
+		fi
+		sleep 1
+		
 		if [ $lcd_backlight -ne $last_backlight ];then
 			log $serial lcd backlight is $lcd_backlight
 		fi
@@ -76,14 +90,14 @@ else
 	check_idle_from_process
 fi
 
-sleep 3
+sleep 1
 log $serial Long press Power key
 send_key POWER 8
 
-sleep 3
+sleep 1
 log $serial Move Item to reset
 send_key DPAD_DOWN
-sleep 3
+sleep 1
 log $serial Select to reset
 send_key ENTER
 

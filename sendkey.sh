@@ -78,19 +78,22 @@ case $key in
 		;;
 esac
 
-# key down
-adb -s $serial shell "sendevent $event 1 $key_value 1"
-adb -s $serial shell "sendevent $event 0 0 0"
+
 
 if [ "x$3" != "x" ] ; then
+	# key down
+	adb -s $serial shell "sendevent $event 1 $key_value 1"
+	adb -s $serial shell "sendevent $event 0 0 0"
 	sleep $3
-
+	# key up
+	adb -s $serial shell "sendevent $event 1 $key_value 0"
+	adb -s $serial shell "sendevent $event 0 0 0"
+else
+	# key down
+	adb -s $serial shell "sendevent $event 1 $key_value 1;sendevent $event 0 0 0;sendevent $event 1 $key_value 0;sendevent $event 0 0 0"
 fi
 
-# key up
-adb -s $serial shell "sendevent $event 1 $key_value 0"
 
-adb -s $serial shell "sendevent $event 0 0 0"
 sleep 0.6
 
 

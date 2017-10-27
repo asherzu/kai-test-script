@@ -16,13 +16,13 @@ function log()
 emcp_name=`adb -s $serial shell "cat /sys/block/mmcblk0/device/name"`
 log "EMCP:$emcp_name"
 
-log =============== $num =================== |tee -a ${log_file}
+log =============== $num ===================
 ./do_reset.sh $serial fromBacklight|tee -a ${log_file}
 let num++
 
 while [ $num -le $total ] 
 do
-log =============== $num =================== |tee -a ${log_file}
+log =============== $num =================== 
 ./do_reset.sh $serial fromBacklight|tee -a ${log_file}
 if [ $? -ne 0 ] ; then
 	exit 1
