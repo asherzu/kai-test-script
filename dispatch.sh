@@ -16,7 +16,7 @@ do
 	fi
 	serial=`echo $device|awk '{print $1}'`
 	
-	$cmd $serial &
+	$cmd $serial $2 $3 $4 &
 done
 wait
 

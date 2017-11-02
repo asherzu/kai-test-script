@@ -1,5 +1,6 @@
 #/bin/bash
 serial=$1
+with_nfc_test=$2
 num=0
 total=1000
 log_file=${serial}_reboot_test.txt
@@ -17,13 +18,13 @@ emcp_name=`adb -s $serial shell "cat /sys/block/mmcblk0/device/name"`
 log "EMCP:$emcp_name"
 
 log =============== $num ===================
-./do_reset.sh $serial fromBacklight|tee -a ${log_file}
+./do_reset.sh $serial fromBacklight $with_nfc_test|tee -a ${log_file}
 let num++
 
 while [ $num -le $total ] 
 do
 log =============== $num =================== 
-./do_reset.sh $serial fromBacklight|tee -a ${log_file}
+./do_reset.sh $serial fromBacklight $with_nfc_test|tee -a ${log_file}
 if [ $? -ne 0 ] ; then
 	exit 1
 fi

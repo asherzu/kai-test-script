@@ -7,6 +7,8 @@ function log()
 }
 
 serial=$1
+with_nfc=$3
+
 function send_key()
 {
 	./sendkey.sh $serial $1 $2
@@ -88,6 +90,10 @@ if [ "x$2" != "x" ] ; then
 	check_idle_from_backlight
 else
 	check_idle_from_process
+fi
+if [ "xwith_nfc" != "x" ] ;  
+log "run NFC test cmd"
+adb  -s $serial shell pnscr -t 1 -d nq-nci -f /system/etc/nfc/Card_Mode.txt
 fi
 
 sleep 1
