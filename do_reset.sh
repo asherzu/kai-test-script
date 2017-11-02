@@ -91,7 +91,7 @@ if [ "x$2" != "x" ] ; then
 else
 	check_idle_from_process
 fi
-if [ "xwith_nfc" != "x" ] ;  
+if [ "x$with_nfc" != "x" ] ;  
 log "run NFC test cmd"
 adb  -s $serial shell pnscr -t 1 -d nq-nci -f /system/etc/nfc/Card_Mode.txt
 fi

@@ -1,6 +1,6 @@
 #/bin/bash
 serial=$1
-with_nfc_test=$2
+with_nfc_test=$3
 num=0
 total=1000
 log_file=${serial}_reboot_test.txt
